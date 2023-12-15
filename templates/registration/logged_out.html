@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Logged Out</title>
+</head>
+<body>
+{% extends "base.html" %}
+
+
+{% block content %}
+<div class="card col-md-2 offset-md-5 mt-5" style="background-color: rgba(255, 255, 255, 0.7);">
+    <div>
+        <h2 style="padding-left:3%; padding-top:3%">Logged out!</h2>
+        <p style="padding-left:3%;">Have a nice day! Hope to see you soon!</p>
+    </div>
+    <div class="col-md-6 mb-3" style="padding-left:3%;">
+        <button class="btn btn-primary"><a class="nav-link" href="{% url 'login'%}" style="color:white">Login again.</a>
+        </button>
+    </div>
+</div>
+{% endblock %}
+
+</body>
+</html>

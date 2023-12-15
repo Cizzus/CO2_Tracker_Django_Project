@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LogIn</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+{% if form.errors %}
+<div class="alert alert-{% if form.errors %}danger {% endif %} col-md-8 offset-md-2 mt-3" role="alert">
+<p>Log in error, try again!</p>
+</div>
+{% endif %}
+
+{% if next %}
+{% if user.is_authenticated %}
+<p>Neturite prieigos prie šios informacijos. Turite prisijungti.</p>
+{% endif %}
+{% endif %}
+
+<div class="container h-100 mt-5" style="padding-top: 5%">
+    <div class="row align-items-center h-100">
+        <div class="col-md-4 offset-md-4">
+            <div class="card" style="background-color: rgba(255, 255, 255, 0.7)">
+                <div class="card-body">
+                    <h3 class="card-title text-center">LogIn</h3>
+                    <!-- Login Form -->
+                    <form class="align-items-center" method="post" action="{% url 'login' %}" style="position: relative; right:15%">
+                        {% csrf_token %}
+                        <div class="mb-4" style="padding-left: 18%;">
+                            <label class="form-label">Username:</label>
+                            {{ form.username }}<br/>
+                            <label class="form-label" style="padding-left:1%">Password:</label>
+                            {{ form.password }}<br/>
+                            <a href="{% url 'password_reset' %}" style="padding-left:50%">Forgot password?</a>
+                        </div>
+
+                        <div class="row align-items-center" style="padding-left:45%">
+                            <div class="col">
+                                <button type="submit" class="btn btn-primary btn-block">LogIn</button>
+                                <button type="submit" class="btn btn-secondary btn-block" style="height:38px"><a class="nav-link" href="{% url 'register'%}" style="color: white; position: relative; bottom:9px">SignUp</a></button>
+                            </div>
+                        </div>
+                        <input type="hidden" name="next" value="{{ next }}"/>
+                    </form>
+                    <!-- End Login Form -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

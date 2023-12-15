@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Electricity CO2</title>
+</head>
+<body>
+{% extends "base.html" %}
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgba(255, 255, 255, 0.5)">
+    <div class="container" >
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'travel_co2' %}">Travel</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'food_co2' %}">Food</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'energy_co2' %}">Energy</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="card col-md-2 offset-md-4 mt-5" style="background-color: rgba(255, 255, 255, 0.7); left:6%">
+    <form method="post" action="{% url 'energy_co2' %}" id="electricityForm">
+
+        {% csrf_token %}
+
+        <div class="form-group col-md-5 offset-md-3 mt-3">
+            <label for="energyType">Select Energy Type:</label>
+            <select id="energyType" name="energyType" class="form-control" onchange="toggleFields()">
+                <option value="select">--- Select type ---</option>
+                <option value="Traditional">Traditional</option>
+                <option value="Clean">Clean</option>
+            </select>
+        </div>
+
+
+        <div id="traditionalFields" style="display: none;">
+            <div class="form-group col-md-6 offset-md-3">
+                <label for="location">Location:</label>
+                <select id="location" name="location" class="form-control">
+                    {% for location in locations %}
+                    <option value="{{ location }}">{{ location }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group col-md-6 offset-md-3">
+                <label for="kwhTraditional">kWh Used:</label>
+                <input type="number" id="kwhTraditional" name="kwhTraditional" class="form-control" min="0" step="0.01">
+            </div>
+
+
+        </div>
+
+        <div id="cleanFields" style="display: none;">
+            <div class="form-group col-md-6 offset-md-3">
+                <label for="energySource">Select Energy Source:</label>
+                <select id="energySource" name="energySource" class="form-control">
+                    {% for clean_energy in clean_energy_types %}
+                    <option value="{{ clean_energy }}">{{ clean_energy }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group col-md-6 offset-md-3">
+                <label for="kwhClean">kWh Used:</label>
+                <input type="number" id="kwhClean" name="kwhClean" class="form-control" min="0" step="0.01">
+            </div>
+        </div>
+
+        <div id="dateField" style="display:none;">
+            <div class="form-group col-md-6 offset-md-3">
+                <label for="date_created_label">Date:</label>
+                <input type="date" id="date_created_label" name="date_created_label" class="form-control" max="{{ today }}">
+            </div>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary offset-md-3 mt-3 mb-3">Add CO2</button>
+    </form>
+</div>
+
+<script>
+    function toggleFields() {
+        var energyType = document.getElementById("energyType").value;
+        var traditionalFields = document.getElementById("traditionalFields");
+        var cleanFields = document.getElementById("cleanFields");
+        var date_created = document.getElementById("dateField");
+
+        if (energyType === "Traditional") {
+            traditionalFields.style.display = "block";
+            cleanFields.style.display = "none";
+            date_created.style.display = "block";
+        } else if (energyType === "Clean") {
+            traditionalFields.style.display = "none";
+            cleanFields.style.display = "block";
+            date_created.style.display = "block";
+        } else if (energyType === "select") {
+            traditionalFields.style.display = "none";
+            cleanFields.style.display = "none";
+            date_created.style.display = "none";
+        }
+    }
+</script>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Travel CO2</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+</head>
+<body>
+{% extends "base.html" %}
+{% block content %}
+
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgba(255, 255, 255, 0.5)">
+    <div class="container">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'travel_co2' %}">Travel</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'food_co2' %}">Food</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'energy_co2' %}">Energy</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="card col-md-2 offset-md-4 mt-5" style="background-color: rgba(255, 255, 255, 0.7); left:6%">
+    <form method="post" action="{% url 'travel_co2' %}" id="transportForm">
+
+        {% csrf_token %}
+
+        <div class="form-group col-md-5 offset-md-3 mt-3">
+            <label for="transportType">Select Transport Type:</label>
+            <select id="transportType" name="transportType" class="form-control" onchange="toggleFields()">
+                <option value="select">---Select type---</option>
+                <option value="CarbonFootprintFromCarTravel">Car</option>
+                <option value="CarbonFootprintFromFlight">Plane</option>
+                <option value="CarbonFootprintFromMotorBike">Motorbike</option>
+                <option value="CarbonFootprintFromPublicTransit">Public transport</option>
+            </select>
+        </div>
+
+
+        <div id="carFields" style="display: none;">
+            <div class="form-group col-md-6 offset-md-3">
+                <label for="car_type">Car type:</label>
+                <select type="text" id="car_type" name="car_type" class="form-control">
+                    {% for car_type in car_types %}
+                    <option value="{{ car_type }}">{{ car_type }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+
+        <div id="motorbikeFields" style="display: none;">
+            <div class="form-group col-md-6 offset-md-3">
+                <label for="motorbikeType">Select Motorbike Type:</label>
+                <select id="motorbikeType" name="motorbikeType" class="form-control">
+                    {% for motorbike_type in motorbike_types %}
+                    <option value="{{ motorbike_type }}">{{ motorbike_type }}</option>
+                    {% endfor %}
+                    <!-- Add more options as needed -->
+                </select>
+            </div>
+        </div>
+
+        <div id="planeFields" style="display: none;">
+            <div class="form-group col-md-6 offset-md-3">
+                <label for="planeType">Select Plane Type:</label>
+                <select id="planeType" name="planeType" class="form-control">
+                    {% for plane_type in plane_types %}
+                    <option value="{{ plane_type }}">{{ plane_type }}</option>
+                    {% endfor %}
+                    <!-- Add more options as needed -->
+                </select>
+            </div>
+        </div>
+
+        <div id="publicTransportFields" style="display: none;">
+            <div class="form-group col-md-6 offset-md-3">
+                <label for="publicTransport">Select Public Transport Type:</label>
+                <select id="publicTransport" name="publicTransport" class="form-control">
+                    {% for public_transport_type in public_transport_types %}
+                    <option value="{{ public_transport_type }}">{{ public_transport_type }}</option>
+                    {% endfor %}
+                    <!-- Add more options as needed -->
+                </select>
+            </div>
+        </div>
+
+        <div id="distanceField" class="form-group col-md-6 offset-md-3" style="display: none;">
+            <label for="distance_km">Distance, km:</label>
+            <input type="number" id="distance_km" name="distance_km" class="form-control" min="0" step="0.01">
+        </div>
+
+        <div id="dateField" style="display:none;">
+            <div class="form-group col-md-6 offset-md-3">
+                <label for="date_created_label">Date:</label>
+                <input type="date" id="date_created_label" name="date_created_label" class="form-control" max="{{ today }}">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary offset-md-3 mt-3 mb-3">Add CO2</button>
+    </form>
+</div>
+
+<script>
+    function toggleFields() {
+        var transportType = document.getElementById("transportType").value;
+        var carFields = document.getElementById("carFields");
+        var motorbikeFields = document.getElementById("motorbikeFields");
+        var planeFields = document.getElementById("planeFields");
+        var publicTransportFields = document.getElementById("publicTransportFields");
+        var distanceField = document.getElementById("distanceField");
+        var dateField = document.getElementById("dateField");
+
+        if (transportType === "CarbonFootprintFromCarTravel") {
+            carFields.style.display = "block";
+            motorbikeFields.style.display = "none";
+            planeFields.style.display = "none";
+            publicTransportFields.style.display = "none";
+            distanceField.style.display = "block";
+            dateField.style.display = "block";
+        } else if (transportType === "CarbonFootprintFromMotorBike") {
+            carFields.style.display = "none";
+            motorbikeFields.style.display = "block";
+            planeFields.style.display = "none";
+            publicTransportFields.style.display = "none";
+            distanceField.style.display = "block"
+            dateField.style.display = "block";
+        } else if (transportType === "CarbonFootprintFromFlight") {
+            carFields.style.display = "none";
+            motorbikeFields.style.display = "none";
+            planeFields.style.display = "block";
+            publicTransportFields.style.display = "none";
+            distanceField.style.display = "block"
+            dateField.style.display = "block";
+        } else if (transportType === "CarbonFootprintFromPublicTransit") {
+            carFields.style.display = "none";
+            motorbikeFields.style.display = "none";
+            planeFields.style.display = "none";
+            publicTransportFields.style.display = "block";
+            distanceField.style.display = "block"
+            dateField.style.display = "block";
+        } else if (transportType === "select") {
+            carFields.style.display = "none";
+            motorbikeFields.style.display = "none";
+            planeFields.style.display = "none";
+            publicTransportFields.style.display = "none";
+            distanceField.style.display = "none"
+            dateField.style.display = "none";
+        }
+
+
+    }
+</script>
+
+{% endblock %}
+
+</body>
+</html>

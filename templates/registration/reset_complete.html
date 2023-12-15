@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reset Complete</title>
+</head>
+<body>
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container h-100" style="padding-top:5%; font-size:20px">
+    <div class="card col-md-5 offset-md-3 mb-5 mt-5"
+         style="background-color: rgba(255, 255, 255, 0.7); padding-left: 20px; left: 5%;">
+        <h1>Password change accepted!</h1>
+        <p><a href="{% url 'login' %}">LogIn!</a></p>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

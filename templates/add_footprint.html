@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Footprint</title>
+</head>
+<body>
+{% extends "base.html" %}
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgba(255, 255, 255, 0.5)">
+    <div class="container">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'travel_co2' %}">Travel</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'food_co2' %}">Food</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'energy_co2' %}">Energy</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+{% endblock %}
+{% block content %}
+
+
+<div class="card col-md-8 offset-md-2 mt-5 mb-5" style="background-color: rgba(255, 255, 255, 0.7)">
+    <h2 class="mt-3" style="margin-left:1%">Travel CO2 records</h2>
+    <div class="table-responsive" style="max-height: 300px; overflow-y: auto; ">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Transport</th>
+                <th>Transport Type</th>
+                <th>Distance, km</th>
+                <th>CO2, kg</th>
+                <th>Date Created</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for data in travel_co2 %}
+            <tr>
+                <td>{{ data.transport }}</td>
+                <td>{{ data.transport_type }}</td>
+                <td>{{ data.distance }}</td>
+                <td>{{ data.co2_kg }}</td>
+                <td>{{ data.date_created }}</td>
+                <td>
+                    <form method="post" action="{% url 'travel_delete' data.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="card col-md-8 offset-md-2 mt-3 mb-5" style="background-color: rgba(255, 255, 255, 0.7)">
+    <h2 class="mt-3" style="margin-left:1%">Food CO2 records</h2>
+    <div class="table-responsive" style="max-height: 300px; overflow-y: auto; ">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Group</th>
+                <th>Category</th>
+                <th>Name</th>
+                <th>Food mass, kg</th>
+                <th>CO2, kg</th>
+                <th>Date Created</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for data in food_co2 %}
+            <tr>
+                <td>{{ data.group }}</td>
+                <td>{{ data.category }}</td>
+                <td>{{ data.name }}</td>
+                <td>{{ data.amount_kg }}</td>
+                <td>{{ data.co2_kg }}</td>
+                <td>{{ data.date_created }}</td>
+                <td>
+                    <form method="post" action="{% url 'food_delete' data.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="card col-md-8 offset-md-2 mt-3 mb-5" style="background-color: rgba(255, 255, 255, 0.7)">
+    <h2 class="mt-3" style="margin-left:1%">Energy CO2 records</h2>
+    <div class="table-responsive" style="max-height: 300px; overflow-y: auto; ">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Type</th>
+                <th>Location</th>
+                <th>Green Energy Type</th>
+                <th>Energy, kWh</th>
+                <th>CO2, kg</th>
+                <th>Date Created</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for data in energy_co2 %}
+            <tr>
+                <td>{{ data.type }}</td>
+                <td>{{ data.location }}</td>
+                <td>{{ data.green_type }}</td>
+                <td>{{ data.amount_kwh }}</td>
+                <td>{{ data.co2_kg }}</td>
+                <td>{{ data.date_created }}</td>
+                <td>
+                    <form method="post" action="{% url 'energy_delete' data.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <style>
+        .form-group {
+        padding-left: 10%;
+        padding-right: 30%;
+        font-size:20px;
+        }
+    </style>
+</head>
+<body>
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div class="container register col-md-4" style="padding-top: 5%">
+    <div class="card" style="background-color: rgba(255, 255, 255, 0.7);">
+    <h2 style="padding-left: 10%; padding-top: 2%">Registration</h2><br/>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input name="username" type="text" class="form-control" id="username" aria-describedby="usernameHelp">
+            <small id="usernameHelp" class="form-text text-muted">Up to 50 symbols.</small>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Email</label>
+            <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <small id="emailHelp" class="form-text text-muted">Do not share your email address with anyone. </small>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input name="password" type="password" class="form-control" id="password" aria-describedby="pwdHelp">
+            <small id="pwdHelp" class="form-text text-muted">Minimum 8 symbols. Only digit values are forbidden.</small>
+        </div>
+        <div class="form-group">
+            <label for="password2">Repeat password</label>
+            <input name="password2" type="password" class="form-control" id="password2" aria-describedby="pwd2Help">
+        </div>
+        <button type="submit" class="btn btn-primary register-button mt-3" style="position: relative; left:10%">Register</button>
+    </form>
+    <p style="padding-left:10%">If you already have an account, <a href="{% url 'login' %}"><strong>LogIn.</strong></a></p>
+</div>
+</div>
+
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Footprint</title>
+</head>
+<body>
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="content-section">
+    <div class="media mt-5 offset-md-5">
+        <img class="rounded-circle account-img" src="{{ user.profile.photo.url }}">
+        <div class="media-body col-md-7 ">
+            <div style="font-weight: bold; font-color: black; position:relative; font-size: 20px; padding-left: 30%; bottom:110px">
+                <h2>{{ user.username }}</h2>
+                <p>{{ user.email }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="card col-md-3 offset-md-4 mb-5"
+         style="background-color: rgba(255, 255, 255, 0.7); padding-left: 20px; left: 5%">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <div class="col-md-10 offset-md-1 mt-3" style="font-size: 20px">
+                    {{ u_form|crispy }}
+                </div>
+                <div class="col-md-10 offset-md-1 mt-3" style="font-size: 20px">
+                    {{ p_form|crispy }}
+                </div>
+            </fieldset>
+            <div class="col-md-10 offset-md-1 mt-3 mb-3">
+                <button class="btn btn-primary" type="submit" style="font-size:20px">Update</button>
+                <button class="btn btn-secondary col-md-8" style="height:45px"><a class="nav-link"
+                                                                                  href="{% url 'change_password' %}"
+                                                                                  style="position: relative;color: white; font-size:20px; bottom:7px">Change
+                    password</a></button>
+            </div>
+        </form>
+
+    </div>
+</div>
+{% endblock content %}
+</body>
+</html>

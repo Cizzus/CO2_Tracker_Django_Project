@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Footprint</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgba(255, 255, 255, 0.5)">
+    <div class="container">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'profile' %}">Update profile</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="media col-md-12 mt-3" style="padding-left:40%">
+    <div class="media-body">
+        <h2 class="account-heading" style="padding-left:5%">{{ user.username }}
+        <img class="rounded-circle account-img" src="{{ user.profile.photo.url }}">
+        </h2>
+    </div>
+</div>
+</div>
+
+<div class="card col-md-8 offset-md-2 mt-3 mb-5" style="background-color: rgba(255, 255, 255, 0.7)">
+    <h2 class="title mb-2 col-md-8 offset-md-5 mt-3">Your week CO<sub>2</sub> limit</h2>
+    <div style="flex-grow: 1; display: flex; align-items: center;">
+        <div class="progress mb-2 col-md-8 offset-md-2" style="height: 30px; position: relative; background-color: gray">
+            <div class="progress-bar " role="progressbar" style="width: {{ total_week_co2_percentage }}%;"
+                 aria-valuenow="{{ total_week_co2_percentage }}" aria-valuemin="0" aria-valuemax="100">
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: black; font-size: 20px; font-weight: normal">
+                    {{ total_week_co2_kg }}/{{ week_limit }} kg
+                </div>
+            </div>
+        </div>
+        <div style="margin-left: 10px; color: black; font-size: 20px; padding-bottom: 1%; font-weight:bold">
+            {{ total_week_co2_percentage }} %
+        </div>
+    </div>
+
+    <hr/>
+    <div>
+        <h2 class="title col-md-8 offset-md-5">Total CO<sub>2</sub> over time</h2>
+        {{ graph | safe }}
+    </div>
+    <hr/>
+    <h2 class="title mb-2 col-md-8 offset-md-4 mt-2">Your CO<sub>2</sub> emission by categories</h2>
+
+    <div style="padding-left:3%">
+        <div class="d-flex flex-row mb-2 col-md-12 offset-md-1">
+            <div style="flex-grow: 1; display: flex; align-items: center;">
+                <span style="font-size: 25px; padding-bottom: 1%">Travel &nbsp&nbsp&nbsp  </span>
+
+                <div class="progress mb-2 col-md-8" style="height: 30px; position: relative; background-color: gray">
+                    <div class="progress-bar " role="progressbar" style="width: {{ travel_over_total }}%"
+                         aria-valuenow="{{ travel_over_total }}" aria-valuemin="0" aria-valuemax="100">
+                    </div>
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: black; font-size: 20px;">
+                        {{ travel_total }}/ {{ total_co2_kg }} kg
+                    </div>
+                </div>
+                <div style="margin-left: 10px; color: black; font-size: 20px; padding-bottom: 1%; font-weight: bold">
+                    {{ travel_over_total }} %
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="d-flex flex-row mb-2 col-md-12 offset-md-1">
+                <div style="flex-grow: 1; display: flex; align-items: center;">
+                    <span style="font-size: 25px; padding-bottom: 1%">Food&nbsp&nbsp&nbsp&nbsp&nbsp  </span>
+                    <div class="progress mb-2 col-md-8" style="height: 30px; position: relative; background-color: gray">
+                        <div class="progress-bar " role="progressbar" style="width: {{ food_over_total }}%;"
+                             aria-valuenow="{{ food_over_total }}" aria-valuemin="0" aria-valuemax="100">
+
+                        </div>
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: black; font-size: 20px;">
+                            {{ food_total }}/ {{ total_co2_kg }} kg
+                        </div>
+                    </div>
+                    <div style="margin-left: 10px; color: black; font-size: 20px; padding-bottom: 1%; font-weight: bold">
+                        {{ food_over_total }} %
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="d-flex flex-row mb-2 col-md-12 offset-md-1">
+                    <div style="flex-grow: 1; display: flex; align-items: center;">
+                        <span style="font-size: 25px; padding-bottom: 1%">Energy &nbsp  </span>
+                        <div class="progress mb-2 col-md-8" style="height: 30px; position: relative; background-color: gray">
+                            <div class="progress-bar" role="progressbar"
+                                 style="width: {{ energy_over_total }}%; font-size:15px;"
+                                 aria-valuenow="{{ energy_over_total }}" aria-valuemin="0" aria-valuemax="100">
+                            </div>
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: black; font-size: 20px;">
+                                {{ energy_total }}/ {{ total_co2_kg }} kg
+                            </div>
+                        </div>
+                        <div style="margin-left: 10px; color: black; font-size: 20px; padding-bottom: 1%; font-weight: bold">
+                            {{ energy_over_total }} %
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+</body>
+</html>

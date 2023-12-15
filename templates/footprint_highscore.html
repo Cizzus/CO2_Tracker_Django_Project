@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Footprint Highscore</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <!-- Enable DataTables for the table with the 'table' class -->
+    <script>
+        $(document).ready( function () {
+            $('table').DataTable();
+        });
+    </script>
+    <style>
+        #highscore_table thead th {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+        #highscore_table_filter {
+            margin-bottom: 20px;
+            margin-right: 10px
+        }
+
+        #highscore_table tbody tr {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+    </style>
+</head>
+<body>
+{% extends "base.html" %}
+{% block content %}
+<div class="card col-md-6 offset-md-3 mt-5" style="background-color: rgba(255, 255, 255, 0.7); padding-top: 1%; padding-bottom: 1%">
+{{ df_html | safe }}
+</div>
+{% endblock %}
+</body>
+</html>

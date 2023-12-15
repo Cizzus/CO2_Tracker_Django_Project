@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 18px
+        }
+    </style>
+</head>
+<body>
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="container card col-md-5 mt-5 mb-5" style="background-color: rgba(255, 255, 255, 0.7);">
+    <!-- Introduction Section -->
+    <div class="row">
+        <div class="col">
+            <header>
+                <h1>CO<sub>2</sub> Tracker</h1>
+                <p>Your personalized journey towards a greener and more sustainable lifestyle.</p>
+            </header>
+
+            <main>
+                <p>In a world where our carbon footprint plays a crucial role in the health of our planet, understanding
+                    and minimizing our individual impact is essential. Our platform empowers you to take control of your
+                    environmental footprint by tracking key contributors such as travel, food choices, and energy
+                    consumption.</p>
+
+                <p>By logging your daily activities, you gain valuable insights into your carbon emissions, fostering
+                    awareness and promoting mindful decision-making. Whether it's the miles you travel, the food you
+                    consume, or the energy you use, each action contributes to the global carbon equation.</p>
+
+                <p>Join us on this eco-conscious adventure as we strive to create a community dedicated to making
+                    informed choices for a healthier, more sustainable future. Let's embark on the journey together, one
+                    carbon-conscious step at a time.</p>
+            </main>
+            <br/>
+            <h2 class="offset-md-4 mt-5">Global CO2 level</h2>
+            <div class="col-md-11 mb-5" style="position:relative; left: 5%">
+                {{ graph | safe }}
+                <div>
+                    <p><i>*Trend - represents the long-term direction in which carbon emissions are moving. <br/>
+                   **Cycle - refer to recurring patterns or fluctuations that occur within a specific timeframe. <br/>
+                    Source: <a href="https://gml.noaa.gov/ccgg/trends/">National Oceanic and Atmospheric
+                        Administration</a></i></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+{% endblock %}
+</body>
+</html>

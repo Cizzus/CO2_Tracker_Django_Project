@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .row {
+  width: 100%;
+  clear: both;
+}
+
+.row input {
+  width: 100%;
+  clear: both;
+}
+    </style>
+</head>
+<body>
+{% extends "base.html" %}
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgba(255, 255, 255, 0.5)">
+    <div class="container">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'travel_co2' %}">Travel</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'food_co2' %}">Food</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'energy_co2' %}">Energy</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+{% endblock %}
+{% block content %}
+
+
+<form method="post" action="{% url 'food_co2' %}" class="container mt-5">
+    {% csrf_token %}
+    <div class="row">
+        <div class="card col-md-3 offset-md-4" style="background-color: rgba(255, 255, 255, 0.7);">
+            <div class="col-md-12 mt-4 mb-3">
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% if food_data %}
+<h2 class="mt-4">Results:</h2>
+<div class="card col-md-8 offset-md-2 mt-3 mb-5" style="background-color: rgba(255, 255, 255, 0.8);">
+    <div class="table-responsive "
+         style="max-height: 300px; overflow-y: auto;  font-size: 20px">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Group</th>
+                <th>Category</th>
+                <th>Name</th>
+                <th>Amount, Kg</th>
+                <th>Footprint</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for data in food_data %}
+            <tr>
+                <td>{{ data.group }}</td>
+                <td>{{ data.category }}</td>
+                <td>{{ data.name }}</td>
+                <td>{{ amount_kg }}</td>
+                <td>{{ data.footprint }}</td>
+                <td>
+                    <form method="post" action="{% url 'save_food' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="group" value="{{ data.group }}">
+                        <input type="hidden" name="category" value="{{ data.category }}">
+                        <input type="hidden" name="name" value="{{ data.name }}">
+                        <input type="hidden" name="amount_kg" value="{{ amount_kg }}">
+                        <input type="hidden" name="footprint" value="{{ data.footprint }}">
+                        <button type="submit" class="btn btn-success">Select</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+</body>
+</html>
