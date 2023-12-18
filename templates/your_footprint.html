@@ -22,7 +22,7 @@
 <div class="media col-md-12 mt-3" style="padding-left:40%">
     <div class="media-body">
         <h2 class="account-heading" style="padding-left:5%">{{ user.username }}
-        <img class="rounded-circle account-img" src="{{ user.profile.photo.url }}">
+            <img class="rounded-circle account-img" src="{{ user.profile.photo.url }}">
         </h2>
     </div>
 </div>
@@ -31,7 +31,8 @@
 <div class="card col-md-8 offset-md-2 mt-3 mb-5" style="background-color: rgba(255, 255, 255, 0.7)">
     <h2 class="title mb-2 col-md-8 offset-md-5 mt-3">Your week CO<sub>2</sub> limit</h2>
     <div style="flex-grow: 1; display: flex; align-items: center;">
-        <div class="progress mb-2 col-md-8 offset-md-2" style="height: 30px; position: relative; background-color: gray">
+        <div class="progress mb-2 col-md-8 offset-md-2"
+             style="height: 30px; position: relative; background-color: gray">
             <div class="progress-bar " role="progressbar" style="width: {{ total_week_co2_percentage }}%;"
                  aria-valuenow="{{ total_week_co2_percentage }}" aria-valuemin="0" aria-valuemax="100">
                 <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: black; font-size: 20px; font-weight: normal">
@@ -78,7 +79,8 @@
             <div class="d-flex flex-row mb-2 col-md-12 offset-md-1">
                 <div style="flex-grow: 1; display: flex; align-items: center;">
                     <span style="font-size: 25px; padding-bottom: 1%">Food&nbsp&nbsp&nbsp&nbsp&nbsp  </span>
-                    <div class="progress mb-2 col-md-8" style="height: 30px; position: relative; background-color: gray">
+                    <div class="progress mb-2 col-md-8"
+                         style="height: 30px; position: relative; background-color: gray">
                         <div class="progress-bar " role="progressbar" style="width: {{ food_over_total }}%;"
                              aria-valuenow="{{ food_over_total }}" aria-valuemin="0" aria-valuemax="100">
 
@@ -96,7 +98,8 @@
                 <div class="d-flex flex-row mb-2 col-md-12 offset-md-1">
                     <div style="flex-grow: 1; display: flex; align-items: center;">
                         <span style="font-size: 25px; padding-bottom: 1%">Energy &nbsp  </span>
-                        <div class="progress mb-2 col-md-8" style="height: 30px; position: relative; background-color: gray">
+                        <div class="progress mb-2 col-md-8"
+                             style="height: 30px; position: relative; background-color: gray">
                             <div class="progress-bar" role="progressbar"
                                  style="width: {{ energy_over_total }}%; font-size:15px;"
                                  aria-valuenow="{{ energy_over_total }}" aria-valuemin="0" aria-valuemax="100">
