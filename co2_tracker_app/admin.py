@@ -6,23 +6,23 @@ from .models import (GlobalCO2Level, Profile, Transport, TravelCO2, TransportTyp
 # Register your models here.
 
 class AdminGlobalCO2Level(admin.ModelAdmin):
-    list_display = ('date', 'trend', 'cycle')
+    list_display = ("date", "trend", "cycle")
 
 
 class AdminTransportType(admin.ModelAdmin):
-    list_display = ('name', 'transport')
+    list_display = ("name", "transport")
 
 
 class AdminTravelCO2(admin.ModelAdmin):
-    list_display = ('user', 'transport_type', 'date_created')
+    list_display = ("user", "transport_type", "date_created")
 
 
 class AdminFoodCO2(admin.ModelAdmin):
-    list_display = ('user', 'name', 'date_created')
+    list_display = ("user", "name", "date_created")
 
 
 class AdminEnergyCO2(admin.ModelAdmin):
-    list_display = ('user', 'type', 'date_created')
+    list_display = ("user", "type", "date_created")
 
 
 admin.site.register(GlobalCO2Level, AdminGlobalCO2Level)

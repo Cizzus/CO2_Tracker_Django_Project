@@ -42,7 +42,7 @@ class Transport(models.Model):
 
 class TransportType(models.Model):
     name = models.CharField(max_length=100)
-    transport = models.ForeignKey('Transport', on_delete=models.CASCADE)
+    transport = models.ForeignKey("Transport", on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.name}"
