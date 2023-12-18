@@ -69,18 +69,30 @@ def your_footprint(request):
     # Total CO2 by user
     total_co2_kg = travel_co2_kg + food_co2_kg + energy_co2_kg
     total_co2_date = travel_date + food_date + energy_date
-    total_co2_kg_sum = round(sum(total_co2_kg), 2)
-    plot_div = total_user_co2_kg(total_co2_kg, total_co2_date)  # Generates total CO2 kg graph
+    # If user have any CO2 emission data
+    if total_co2_date:
+        total_co2_kg_sum = round(sum(total_co2_kg), 2)
+        plot_div = total_user_co2_kg(total_co2_kg, total_co2_date)  # Generates total CO2 kg graph
 
-    # Total week CO2 by user
-    total_week_co2_percentage, total_week_co2_kg = week_co2_emission(request.user, week_limit)
-    total_week_co2_percentage = round(total_week_co2_percentage, 1)
-    total_week_co2_kg = round(total_week_co2_kg, 2)
+        # Total week CO2 by user
+        total_week_co2_percentage, total_week_co2_kg = week_co2_emission(request.user, week_limit)
+        total_week_co2_percentage = round(total_week_co2_percentage, 1)
+        total_week_co2_kg = round(total_week_co2_kg, 2)
 
-    # Total CO2 user added by categories
-    travel_over_total = round(travel_co2_sum / total_co2_kg_sum * 100, 1)
-    food_over_total = round(food_co2_sum / total_co2_kg_sum * 100, 1)
-    energy_over_total = round(energy_co2_sum / total_co2_kg_sum * 100, 1)
+        # Total CO2 user added by categories
+        travel_over_total = round(travel_co2_sum / total_co2_kg_sum * 100, 1)
+        food_over_total = round(food_co2_sum / total_co2_kg_sum * 100, 1)
+        energy_over_total = round(energy_co2_sum / total_co2_kg_sum * 100, 1)
+
+    # If user do not have any CO2 emission data
+    else:
+        total_week_co2_percentage = 0
+        total_week_co2_kg = 0
+        total_co2_kg_sum = 0
+        plot_div = None
+        travel_over_total = 0
+        food_over_total = 0
+        energy_over_total = 0
 
     context = {
         "total_week_co2_percentage": total_week_co2_percentage,
@@ -412,17 +424,19 @@ def footprint_highscore(request):
         all_footprints += travel_co2_obj
         all_footprints += food_co2_obj
         all_footprints += energy_co2_obj
-        # Calculates total CO2 kg emission of particular user
-        co2_kg = 0
-        dates = []
-        for footprint in all_footprints:
-            co2_kg += footprint.co2_kg
-            dates.append(footprint.date_created)
-        # Calculates average CO2 kg emission / day of particular user
-        avg_co2_kg_user = co2_kg / len(set(dates))
-        # Puts username and CO2 kg/day into particular list
-        users.append(user.username)
-        avg_co2_kg.append(round(avg_co2_kg_user, 2))
+        # If user has any footprint records then it is calculated for highscore table
+        if all_footprints:
+            # Calculates total CO2 kg emission of particular user
+            co2_kg = 0
+            dates = []
+            for footprint in all_footprints:
+                co2_kg += footprint.co2_kg
+                dates.append(footprint.date_created)
+            # Calculates average CO2 kg emission / day of particular user
+            avg_co2_kg_user = co2_kg / len(set(dates))
+            # Puts username and CO2 kg/day into particular list
+            users.append(user.username)
+            avg_co2_kg.append(round(avg_co2_kg_user, 2))
     # Prepare and puts all data into pandas DataFrame HTML table
     data = {
         "Username": users,

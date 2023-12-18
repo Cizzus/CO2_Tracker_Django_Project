@@ -47,7 +47,11 @@
     <hr/>
     <div>
         <h2 class="title col-md-8 offset-md-5">Total CO<sub>2</sub> over time</h2>
+        {% if graph %}
         {{ graph | safe }}
+        {% else %}
+        <p style="font-size: 20px; position: relative; left: 44%">There is no data to plot</p>
+        {% endif %}
     </div>
     <hr/>
     <h2 class="title mb-2 col-md-8 offset-md-4 mt-2">Your CO<sub>2</sub> emission by categories</h2>
